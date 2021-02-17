@@ -51,6 +51,10 @@ public class Workorder {
     @Setter
     private Long invoiceNumber;
 
+    @Getter
+    @Setter
+    private Boolean customerAgreed;
+
 
 
 

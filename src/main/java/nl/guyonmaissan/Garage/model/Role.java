@@ -20,17 +20,24 @@ import java.util.List;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     @Column(columnDefinition = "serial")
     @Getter
     @Setter
-    private Long role_id;
+    private long id;
 
     @Enumerated(EnumType.STRING)
     @Getter
     @Setter
     private ERole name;
 
-    @ManyToMany (mappedBy = "roles")
-    private List<User> users;
+    public Role() {
+    }
 }

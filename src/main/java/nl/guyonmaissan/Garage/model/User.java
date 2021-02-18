@@ -2,8 +2,10 @@ package nl.guyonmaissan.Garage.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,14 +23,18 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
+    @Column(columnDefinition = "serial")
     @Getter
     @Setter
-    private Long user_id;
-
-    @Getter
-    @Setter
-    private String email;
+    private Long id;
 
     @Getter
     @Setter
@@ -36,13 +42,22 @@ public class User {
 
     @Getter
     @Setter
+    private String email;
+
+    @Getter
+    @Setter
     private String password;
 
     @ManyToMany
-    @JoinTable(name = "user_role",
+    @Getter
+    @Setter
+    @JoinTable (name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+    private Set<Role> roles;
 
+    public User() {
+
+    }
 
 }

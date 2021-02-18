@@ -1,7 +1,13 @@
 package nl.guyonmaissan.Garage.repository;
 
+import nl.guyonmaissan.Garage.model.ERole;
 import nl.guyonmaissan.Garage.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RoleRepository extends JpaRepository<Role,Long> {
+import java.util.Optional;
+
+public interface RoleRepository extends JpaRepository<Role, Long> {
+
+    Optional<Role> findByName(ERole name);
+
 }

@@ -56,4 +56,8 @@ public class WorkorderRow {
     @Getter
     @Setter
     private LocalDateTime modified;
+
+    @Getter
+    @Setter
+    private Boolean customerAgreed;
 }

@@ -106,10 +106,28 @@ public class AuthorizationService {
                         roles.add(adminRole);
 
                         break;
-                    case "mod":
-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                    case "mechanic":
+                        Role mechanicRole = roleRepository.findByName(ERole.ROLE_MECHANIC)
                                 .orElseThrow(() -> new RuntimeException(ROLE_NOT_FOUND_ERROR));
-                        roles.add(modRole);
+                        roles.add(mechanicRole);
+
+                        break;
+                    case "cashier":
+                        Role cashierRole = roleRepository.findByName(ERole.ROLE_CASHIER)
+                                .orElseThrow(() -> new RuntimeException(ROLE_NOT_FOUND_ERROR));
+                        roles.add(cashierRole);
+
+                        break;
+                    case "backoffice":
+                        Role backoffideRole = roleRepository.findByName(ERole.ROLE_BACKOFFICE)
+                                .orElseThrow(() -> new RuntimeException(ROLE_NOT_FOUND_ERROR));
+                        roles.add(backoffideRole);
+
+                        break;
+                    case "administrator":
+                        Role administratorRole = roleRepository.findByName(ERole.ROLE_ADMINISTRATOR)
+                                .orElseThrow(() -> new RuntimeException(ROLE_NOT_FOUND_ERROR));
+                        roles.add(administratorRole);
 
                         break;
                     default:
@@ -132,7 +150,7 @@ public class AuthorizationService {
      *
      * Wanneer de gebruikersnaam/wachtwoord combinatie niet klopt, wordt er een Runtime exception gegooid:
      * 401 Unauthorized. Deze wordt gegooid door
-     * {@link nl.novi.stuivenberg.springboot.example.security.service.security.jwt.AuthEntryPointJwt}
+     * {@link nl.guyonmaissan.Garage.service.security.jwt.AuthEntryPointJwt}
      *
      *
      * @param loginRequest De payload met username en password.

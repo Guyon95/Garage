@@ -3,20 +3,14 @@ package nl.guyonmaissan.Garage.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
-import java.util.List;
-
 
 @Entity
-public class Customer {
+public class Part {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,18 +20,15 @@ public class Customer {
 
     @Getter
     @Setter
-    @Column(name = "firstName")
-    private String firstName;
+    private int partNumber;
 
     @Getter
     @Setter
-    @Column(name = "lastName")
-    private String lastName;
+    private String description;
 
     @Getter
     @Setter
-    @Column(name = "phoneNumber")
-    private String phoneNumber;
+    private double price;
 
     @Getter
     @Setter
@@ -46,7 +37,4 @@ public class Customer {
     @Getter
     @Setter
     private LocalDateTime modified;
-
-
-
 }

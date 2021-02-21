@@ -4,6 +4,7 @@ import jdk.jfr.StackTrace;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,6 +28,7 @@ public class Workorder {
 
     @Getter
     @Setter
+    @Column(nullable = false)
     private Long woNumber;
 
     @ManyToOne
@@ -36,14 +39,22 @@ public class Workorder {
 
     @Getter
     @Setter
+    @Column(nullable = false)
+    private LocalDateTime appointment;
+
+    @Getter
+    @Setter
+    @Column(nullable = false)
     private LocalDateTime created;
 
     @Getter
     @Setter
+    @Column(nullable = false)
     private LocalDateTime modified;
 
     @Getter
     @Setter
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EWorkorderStatus status;
 

@@ -5,6 +5,8 @@ public enum EWorkorderStatus {
     WORKING,
     READY_TO_START,
     PAID,
-    DECLINED,
+    DO_NOT_EXCUTE,
+    CHECK_CAR,
+    AWAITING_APPROVAL
 
 }

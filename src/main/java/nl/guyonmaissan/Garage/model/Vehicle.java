@@ -7,8 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Vehicle {
@@ -21,12 +25,7 @@ public class Vehicle {
 
     @Getter
     @Setter
-    private String kenteken;
-
-    @ManyToOne
-    @Getter
-    @Setter
-    private Customer customer;
+    private String licensePlate;
 
     @Getter
     @Setter
@@ -35,4 +34,12 @@ public class Vehicle {
     @Getter
     @Setter
     private LocalDateTime modified;
+
+    @ManyToOne
+    @JoinTable(name = "vehicle_customer",
+            joinColumns = @JoinColumn(name = "vehicle_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id"))
+    @Getter
+    @Setter
+    private Customer customer;
 }

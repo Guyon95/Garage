@@ -7,34 +7,33 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 
 @Entity
-public class Parts {
+public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
-    private Long id;
+    public Long id;
 
     @Getter
     @Setter
-    private int partNumber;
+    public LocalDateTime appointment;
+
+    @OneToOne
+    @Getter
+    @Setter
+    public Vehicle vehicle;
 
     @Getter
     @Setter
-    private String description;
+    public LocalDateTime created;
 
     @Getter
     @Setter
-    private double price;
+    public LocalDateTime modified;
 
-    @Getter
-    @Setter
-    private LocalDateTime created;
-
-    @Getter
-    @Setter
-    private LocalDateTime modified;
 }

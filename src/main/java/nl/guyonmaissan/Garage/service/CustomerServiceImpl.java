@@ -2,13 +2,18 @@ package nl.guyonmaissan.Garage.service;
 
 import nl.guyonmaissan.Garage.exceptions.RecordNotFoundException;
 import nl.guyonmaissan.Garage.model.Customer;
+import nl.guyonmaissan.Garage.model.ReturnObject;
+import nl.guyonmaissan.Garage.model.Vehicle;
+import nl.guyonmaissan.Garage.payload.response.MessageResponse;
 import nl.guyonmaissan.Garage.repository.CustomerRepository;
+import nl.guyonmaissan.Garage.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,6 +21,9 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Autowired
     CustomerRepository customerRepository;
+
+    @Autowired
+    VehicleRepository vehicleRepository;
 
     @Override
     public Collection<Customer> getAllCustomers() {
@@ -49,7 +57,32 @@ public class CustomerServiceImpl implements CustomerService{
                     .filter(x -> x.getLastName().equalsIgnoreCase(customer.getLastName()))
                     .collect(Collectors.toList());
         }
+
         return customers;
+    }
+
+    @Override
+    public ReturnObject getCustomerByLicensePlate(String licensePlate) {
+
+        ReturnObject returnObject = new ReturnObject();
+
+        Vehicle vehicle = vehicleRepository.findByLicensePlate(licensePlate);
+
+        if(vehicle !=null){
+            Customer customer = customerRepository.findById(vehicle.getCustomer().getId()).orElse(null);
+
+
+            if(customer == null){
+                returnObject.setMessage("Couldn't find any appointmonts with he license plate: ${licensePlate}.");
+                return returnObject;
+            }
+            returnObject.setObject(customer);
+            returnObject.setMessage("Found a customer with this license plate!");
+            return returnObject;
+        }
+
+        returnObject.setMessage("The vehicle with license plate: ${licensePlate} doesn't exists.");
+        return returnObject;
     }
 
     @Override
@@ -59,14 +92,22 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public void updateCustomer(Long id, Customer customer) {
-        // ToDo
+    public ResponseEntity<MessageResponse> updateCustomer(Customer customer) {
+        Customer updateCustomer = customerRepository.findById(customer.getId()).orElse(null);
+
+        if(updateCustomer != null){
+
+            updateCustomer.setFirstName(customer.getFirstName());
+            updateCustomer.setLastName((customer.getLastName()));
+            updateCustomer.setPhoneNumber(customer.getPhoneNumber());
+            updateCustomer.setModified(LocalDateTime.now());
+
+            customerRepository.save(updateCustomer);
+            return ResponseEntity.ok(new MessageResponse("Customer has been updated!"));
+        }
+        return ResponseEntity.ok(new MessageResponse("No, customer found!"));
     }
 
-    @Override
-    public void partialUpdateCustomer(Long id, Map<String, String> fields) {
-        // ToDo
-    }
 
     @Override
     public void deleteCustomer(Long id) {

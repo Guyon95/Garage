@@ -1,10 +1,12 @@
 package nl.guyonmaissan.Garage.service;
 
 import nl.guyonmaissan.Garage.model.Customer;
+import nl.guyonmaissan.Garage.model.ReturnObject;
+import nl.guyonmaissan.Garage.payload.response.MessageResponse;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 public interface CustomerService {
 
@@ -12,9 +14,11 @@ public interface CustomerService {
     Customer getCustomerById(Long id);
     List<Customer> getCustomers(Customer customer);
 
+    ReturnObject getCustomerByLicensePlate(String licensePlate);
+
     //Collection<Customer> getCustomers(String name);
     long createCustomer(Customer customer);
-    void updateCustomer(Long id, Customer customer);
-    void partialUpdateCustomer(Long id, Map<String, String> fields);
+    ResponseEntity<MessageResponse> updateCustomer(Customer customer);
+
     void deleteCustomer(Long id);
 }

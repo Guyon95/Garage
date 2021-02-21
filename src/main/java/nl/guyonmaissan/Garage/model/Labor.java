@@ -20,6 +20,10 @@ public class Labor {
 
     @Getter
     @Setter
+    private int laborNumber;
+
+    @Getter
+    @Setter
     private String description;
 
     @Getter

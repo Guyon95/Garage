@@ -1,17 +1,22 @@
 package nl.guyonmaissan.Garage.service;
 
+import nl.guyonmaissan.Garage.model.AddWorkorderRow;
+import nl.guyonmaissan.Garage.model.ReturnObject;
 import nl.guyonmaissan.Garage.model.Workorder;
+import nl.guyonmaissan.Garage.model.WorkorderVehicle;
 
-import java.util.Collection;
-import java.util.Map;
+
+import java.util.List;
+
 
 public interface WorkorderService {
 
-    Collection<Workorder> getAllWorkorders();
+    List<Workorder> getAllWorkorders();
     Workorder getWorkorderById(Long id);
-    Workorder getWorkorderByWoNummer(Long woNummer);
-    long createWorkorder(Workorder woNummer);
-    void updateWorkorder(Long id, Workorder woNummer);
-    void partialUpdateWorkorder(Long id, Map<String, String> fields);
+    Workorder getWorkorderByWoNumber(Long woNumber);
+    ReturnObject createWorkorder(WorkorderVehicle workorderVehicle);
+
+    String updateWorkorder(AddWorkorderRow addWorkorderRow);
+
     void deleteWorkorder(Long id);
 }

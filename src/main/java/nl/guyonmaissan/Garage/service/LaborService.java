@@ -15,4 +15,7 @@ public interface LaborService {
     void partialUpdateLabor(Long id, Map<String, String> fields);
     void deleteLabor(Long id);
 
+    Labor getCheckCar();
+    Labor getRow(int rowNumber);
+
 }

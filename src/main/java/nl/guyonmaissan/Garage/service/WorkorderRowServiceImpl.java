@@ -69,7 +69,8 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
         workorderRow.setCustomerAgreed(true);
         workorderRow.setCreated(LocalDateTime.now());
         workorderRow.setModified(LocalDateTime.now());
-        workorderRow.setLabor(laborService.getCheckCar());
+        workorderRow.setDescription(laborService.getCheckCar().getDescription());
+        workorderRow.setPrice(laborService.getCheckCar().getPrice());
         workorderRow.setType(ETypeWorkorderRow.LABOR);
 
         workorderRowRepository.save(workorderRow);
@@ -84,7 +85,8 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
         workorderRow.setCustomerAgreed(false);
         workorderRow.setCreated(LocalDateTime.now());
         workorderRow.setModified(LocalDateTime.now());
-        workorderRow.setLabor(laborService.getRow(labor.getLaborNumber()));
+        workorderRow.setDescription(laborService.getRow(labor.getLaborNumber()).getDescription());
+        workorderRow.setPrice(laborService.getRow(labor.getLaborNumber()).getPrice());
         workorderRow.setType(ETypeWorkorderRow.LABOR);
 
         workorderRowRepository.save(workorderRow);
@@ -94,12 +96,14 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
     public void AddPart(AddPart part, Workorder workorder){
 
         WorkorderRow workorderRow = new WorkorderRow();
+
         workorderRow.setWorkorder(workorder);
         workorderRow.setAmount(part.getAmount());
         workorderRow.setCustomerAgreed(false);
         workorderRow.setCreated(LocalDateTime.now());
         workorderRow.setModified(LocalDateTime.now());
-        workorderRow.setPart(partService.getRow(part.getPartNumber()));
+        workorderRow.setDescription(partService.getRow(part.getPartNumber()).getDescription());
+        workorderRow.setPrice(partService.getRow(part.getPartNumber()).getPrice());
         workorderRow.setType(ETypeWorkorderRow.PART);
 
         workorderRowRepository.save(workorderRow);

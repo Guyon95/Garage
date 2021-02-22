@@ -4,6 +4,7 @@ import nl.guyonmaissan.Garage.exceptions.RecordNotFoundException;
 import nl.guyonmaissan.Garage.model.AddLabor;
 import nl.guyonmaissan.Garage.model.AddPart;
 import nl.guyonmaissan.Garage.model.AddWorkorderRow;
+import nl.guyonmaissan.Garage.model.EWorkorderStatus;
 import nl.guyonmaissan.Garage.model.ReturnObject;
 import nl.guyonmaissan.Garage.model.Vehicle;
 import nl.guyonmaissan.Garage.model.Workorder;
@@ -74,19 +75,23 @@ public class WorkorderServiceImpl implements WorkorderService {
     @Override
     public String updateWorkorder(AddWorkorderRow addWorkorderRow) {
 
-        if(addWorkorderRow.getWorkorder() != null) {
-
+        if(addWorkorderRow.getWorkorder().getWoNumber() != null) {
+            Workorder workorder = workorderRepository.findByWoNumber(addWorkorderRow.getWorkorder().getWoNumber());
             if (addWorkorderRow.getAddParts() != null) {
                 for (AddPart part : addWorkorderRow.addParts) {
-                    workorderRowService.AddPart(part, addWorkorderRow.getWorkorder());
+                    workorderRowService.AddPart(part, workorder);
                 }
             }
 
             if (addWorkorderRow.getAddLabors() != null) {
                 for (AddLabor labor : addWorkorderRow.addLabors) {
-                    workorderRowService.AddLabor(labor, addWorkorderRow.getWorkorder());
+                    workorderRowService.AddLabor(labor, workorder);
                 }
             }
+
+            workorder.setStatus(EWorkorderStatus.AWAITING_APPROVAL);
+            workorderRepository.save(workorder);
+
             Long count = addWorkorderRow.getAddLabors().stream().count() + addWorkorderRow.getAddParts().stream().count();
 
             return "Succesfully added " + count + " row(s).";

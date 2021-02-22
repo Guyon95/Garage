@@ -33,17 +33,13 @@ public class WorkorderRow {
     @Enumerated(EnumType.STRING)
     private ETypeWorkorderRow type;
 
-    @OneToOne
     @Getter
     @Setter
-    @JoinColumn(name = "parts_id", referencedColumnName = "id")
-    private Part part;
+    private String description;
 
-    @OneToOne
     @Getter
     @Setter
-    @JoinColumn(name = "labor_id", referencedColumnName = "id")
-    private Labor labor;
+    private double price;
 
     @Getter
     @Setter

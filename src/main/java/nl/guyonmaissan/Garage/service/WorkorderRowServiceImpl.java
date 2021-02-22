@@ -3,6 +3,7 @@ package nl.guyonmaissan.Garage.service;
 import nl.guyonmaissan.Garage.model.AddLabor;
 import nl.guyonmaissan.Garage.model.AddPart;
 import nl.guyonmaissan.Garage.model.ETypeWorkorderRow;
+import nl.guyonmaissan.Garage.model.OtherAction;
 import nl.guyonmaissan.Garage.model.Workorder;
 import nl.guyonmaissan.Garage.model.WorkorderRow;
 import nl.guyonmaissan.Garage.repository.WorkorderRowRepository;
@@ -41,17 +42,23 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
     }
 
     @Override
-    public long createWorkorderRow(WorkorderRow woNummer) {
-        return 0;
+    public void createWorkorderRow(OtherAction otherAction, Workorder workorder) {
+        WorkorderRow workorderRow = new WorkorderRow();
+
+        workorderRow.setWorkorder(workorder);
+        workorderRow.setAmount(otherAction.getAmount());
+        workorderRow.setCustomerAgreed(false);
+        workorderRow.setDescription(otherAction.getDescription());
+        workorderRow.setPrice(otherAction.getPrice());
+        workorderRow.setModified(LocalDateTime.now());
+        workorderRow.setCreated(LocalDateTime.now());
+        workorderRow.setType(ETypeWorkorderRow.LABOR);
+
+        workorderRowRepository.save(workorderRow);
     }
 
     @Override
     public void updateWorkorderRow(Long id, WorkorderRow woNummer) {
-
-    }
-
-    @Override
-    public void partialUpdateWorkorderRow(Long id, Map<String, String> fields) {
 
     }
 

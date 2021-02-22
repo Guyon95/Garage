@@ -38,5 +38,3 @@ INSERT INTO vehicle_customer (customer_id,vehicle_id) VALUES (4,4);
 INSERT INTO vehicle_customer (customer_id,vehicle_id) VALUES (5,5);
 
 INSERT INTO workorder(vehicle_id,created,modified,status,wo_number,appointment) VALUES (1,NOW(),NOW(),'CHECK_CAR',11111,'2021-03-18 10:00');
-
-INSERT INTO workorder_row(workorder_id,type,labor_id,amount,created,modified,customer_Agreed) VALUES (1,'LABOR',1,1,NOW(),NOW(),true);

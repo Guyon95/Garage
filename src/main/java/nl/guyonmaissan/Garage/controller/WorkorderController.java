@@ -2,6 +2,7 @@ package nl.guyonmaissan.Garage.controller;
 
 
 import nl.guyonmaissan.Garage.model.AddWorkorderRow;
+import nl.guyonmaissan.Garage.model.OtherAction;
 import nl.guyonmaissan.Garage.model.ReturnObject;
 import nl.guyonmaissan.Garage.model.WorkorderVehicle;
 import nl.guyonmaissan.Garage.payload.response.MessageResponse;
@@ -43,4 +44,11 @@ public class WorkorderController {
     public ResponseEntity<MessageResponse> updateWorkorder(@RequestBody AddWorkorderRow addWorkorderRow) {
         return ResponseEntity.ok(new MessageResponse(workorderService.updateWorkorder(addWorkorderRow)));
     }
+
+    @PostMapping(value = "/other")
+    @PreAuthorize("hasRole('MECHANIC')")
+    public ResponseEntity<MessageResponse> addOtherAction(@RequestBody OtherAction otherAction) {
+        return ResponseEntity.ok(new MessageResponse(workorderService.addOtherAction(otherAction)));
+    }
 }
+

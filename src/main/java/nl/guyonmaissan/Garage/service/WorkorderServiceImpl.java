@@ -5,6 +5,7 @@ import nl.guyonmaissan.Garage.model.AddLabor;
 import nl.guyonmaissan.Garage.model.AddPart;
 import nl.guyonmaissan.Garage.model.AddWorkorderRow;
 import nl.guyonmaissan.Garage.model.EWorkorderStatus;
+import nl.guyonmaissan.Garage.model.OtherAction;
 import nl.guyonmaissan.Garage.model.ReturnObject;
 import nl.guyonmaissan.Garage.model.Vehicle;
 import nl.guyonmaissan.Garage.model.Workorder;
@@ -77,6 +78,8 @@ public class WorkorderServiceImpl implements WorkorderService {
 
         if(addWorkorderRow.getWorkorder().getWoNumber() != null) {
             Workorder workorder = workorderRepository.findByWoNumber(addWorkorderRow.getWorkorder().getWoNumber());
+
+            //ToDo null afvangen
             if (addWorkorderRow.getAddParts() != null) {
                 for (AddPart part : addWorkorderRow.addParts) {
                     workorderRowService.AddPart(part, workorder);
@@ -98,6 +101,22 @@ public class WorkorderServiceImpl implements WorkorderService {
 
         }
         return "Couldn't find a workorder.";
+    }
+
+    @Override
+    public String addOtherAction(OtherAction otherAction) {
+
+        if(otherAction.getWorkorder().getWoNumber() != null){
+            Workorder workorder = workorderRepository.findByWoNumber(otherAction.getWorkorder().getWoNumber());
+
+            if(workorder != null){
+                workorderRowService.createWorkorderRow(otherAction,workorder);
+                return "Addded other action to the workorder!";
+            }
+            return "Couldn't find the workorder.";
+        }
+
+        return "Please fill the wo number.";
     }
 
     @Override

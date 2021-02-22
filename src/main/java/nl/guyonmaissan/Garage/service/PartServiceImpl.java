@@ -4,10 +4,12 @@ import nl.guyonmaissan.Garage.model.Labor;
 import nl.guyonmaissan.Garage.model.Part;
 import nl.guyonmaissan.Garage.repository.PartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Map;
 
+@Service
 public class PartServiceImpl implements PartService {
 
     @Autowired

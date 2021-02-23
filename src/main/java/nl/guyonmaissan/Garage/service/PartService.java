@@ -1,6 +1,6 @@
 package nl.guyonmaissan.Garage.service;
 
-import nl.guyonmaissan.Garage.model.Part;
+import nl.guyonmaissan.Garage.dbmodel.Part;
 
 import java.util.Collection;
 import java.util.Map;

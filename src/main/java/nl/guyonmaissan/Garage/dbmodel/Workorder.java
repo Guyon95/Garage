@@ -1,8 +1,9 @@
-package nl.guyonmaissan.Garage.model;
+package nl.guyonmaissan.Garage.dbmodel;
 
-import jdk.jfr.StackTrace;
 import lombok.Getter;
 import lombok.Setter;
+import nl.guyonmaissan.Garage.dbmodel.Vehicle;
+import nl.guyonmaissan.Garage.model.EWorkorderStatus;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import java.time.LocalDateTime;
 
 @Entity

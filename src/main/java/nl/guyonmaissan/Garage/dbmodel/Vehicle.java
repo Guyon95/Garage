@@ -1,22 +1,20 @@
-package nl.guyonmaissan.Garage.model;
+package nl.guyonmaissan.Garage.dbmodel;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.guyonmaissan.Garage.dbmodel.Customer;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import java.util.List;
-
 
 @Entity
-public class Customer {
+public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,18 +24,7 @@ public class Customer {
 
     @Getter
     @Setter
-    @Column(name = "firstName")
-    private String firstName;
-
-    @Getter
-    @Setter
-    @Column(name = "lastName")
-    private String lastName;
-
-    @Getter
-    @Setter
-    @Column(name = "phoneNumber")
-    private String phoneNumber;
+    private String licensePlate;
 
     @Getter
     @Setter
@@ -47,6 +34,11 @@ public class Customer {
     @Setter
     private LocalDateTime modified;
 
-
-
+    @ManyToOne
+    @JoinTable(name = "vehicle_customer",
+            joinColumns = @JoinColumn(name = "vehicle_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id"))
+    @Getter
+    @Setter
+    private Customer customer;
 }

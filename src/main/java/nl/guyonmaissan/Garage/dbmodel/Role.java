@@ -1,26 +1,24 @@
-package nl.guyonmaissan.Garage.model;
+package nl.guyonmaissan.Garage.dbmodel;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.guyonmaissan.Garage.model.ERole;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-@Entity
-@Table(name = "users")
-public class User {
+@Entity(name = "Role")
+@Table(name = "role")
+public class Role {
 
     @Id
     @GeneratedValue(
@@ -34,30 +32,13 @@ public class User {
     @Column(columnDefinition = "serial")
     @Getter
     @Setter
-    private Long id;
+    private long id;
 
+    @Enumerated(EnumType.STRING)
     @Getter
     @Setter
-    private String username;
+    private ERole name;
 
-    @Getter
-    @Setter
-    private String email;
-
-    @Getter
-    @Setter
-    private String password;
-
-    @ManyToMany
-    @Getter
-    @Setter
-    @JoinTable (name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
-
-    public User() {
-
+    public Role() {
     }
-
 }

@@ -7,8 +7,8 @@ import nl.guyonmaissan.Garage.model.AddWorkorderRow;
 import nl.guyonmaissan.Garage.model.EWorkorderStatus;
 import nl.guyonmaissan.Garage.model.OtherAction;
 import nl.guyonmaissan.Garage.model.ReturnObject;
-import nl.guyonmaissan.Garage.model.Vehicle;
-import nl.guyonmaissan.Garage.model.Workorder;
+import nl.guyonmaissan.Garage.dbmodel.Vehicle;
+import nl.guyonmaissan.Garage.dbmodel.Workorder;
 import nl.guyonmaissan.Garage.model.WorkorderVehicle;
 import nl.guyonmaissan.Garage.repository.VehicleRepository;
 import nl.guyonmaissan.Garage.repository.WorkorderRepository;
@@ -118,6 +118,8 @@ public class WorkorderServiceImpl implements WorkorderService {
 
         return "Please fill the wo number.";
     }
+
+
 
     @Override
     public void deleteWorkorder(Long id) {

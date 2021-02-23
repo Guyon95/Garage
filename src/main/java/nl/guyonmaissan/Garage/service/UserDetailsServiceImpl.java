@@ -1,6 +1,6 @@
 package nl.guyonmaissan.Garage.service;
 
-import nl.guyonmaissan.Garage.model.User;
+import nl.guyonmaissan.Garage.dbmodel.User;
 import nl.guyonmaissan.Garage.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

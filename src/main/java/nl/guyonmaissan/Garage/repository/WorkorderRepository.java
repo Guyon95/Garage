@@ -1,6 +1,6 @@
 package nl.guyonmaissan.Garage.repository;
 
-import nl.guyonmaissan.Garage.model.Workorder;
+import nl.guyonmaissan.Garage.dbmodel.Workorder;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WorkorderRepository extends JpaRepository<Workorder,Long> {

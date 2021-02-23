@@ -2,17 +2,21 @@ package nl.guyonmaissan.Garage.service;
 
 import nl.guyonmaissan.Garage.model.AddLabor;
 import nl.guyonmaissan.Garage.model.AddPart;
+import nl.guyonmaissan.Garage.model.Approve;
+import nl.guyonmaissan.Garage.model.ApproveWorkorderRow;
 import nl.guyonmaissan.Garage.model.ETypeWorkorderRow;
 import nl.guyonmaissan.Garage.model.OtherAction;
-import nl.guyonmaissan.Garage.model.Workorder;
-import nl.guyonmaissan.Garage.model.WorkorderRow;
+import nl.guyonmaissan.Garage.dbmodel.Workorder;
+import nl.guyonmaissan.Garage.dbmodel.WorkorderRow;
+import nl.guyonmaissan.Garage.repository.WorkorderRepository;
 import nl.guyonmaissan.Garage.repository.WorkorderRowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
+import java.util.List;
 
 @Service
 public class WorkorderRowServiceImpl implements WorkorderRowService {
@@ -26,6 +30,9 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
     @Autowired
     PartService partService;
 
+    @Autowired
+    private WorkorderRepository workorderRepository;
+
     @Override
     public Collection<WorkorderRow> getAllWorkorderRows() {
         return null;
@@ -37,7 +44,23 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
     }
 
     @Override
-    public Collection<WorkorderRow> getWorkorderRowByWoNummer(String description) {
+    public List<nl.guyonmaissan.Garage.model.WorkorderRow> getWorkorderRowByWoNummer(Long woNumber) {
+
+        List<nl.guyonmaissan.Garage.model.WorkorderRow> workorderRows = new ArrayList<>();
+
+        if(woNumber !=0){
+            Workorder workorder = workorderRepository.findByWoNumber(woNumber);
+
+            if(workorder != null){
+                List<WorkorderRow> dbWorkorderRows = workorderRowRepository.findWorkorderRowByWorkorder(workorder);
+
+                for(WorkorderRow dbWorkorderRow : dbWorkorderRows){
+                    workorderRows.add(CreateApiModel(dbWorkorderRow));
+                }
+
+                return workorderRows;
+            }
+        }
         return null;
     }
 
@@ -65,6 +88,40 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
     @Override
     public void deleteWorkorderRow(Long id) {
 
+    }
+
+    @Override
+    public String approveWorkorderRows(Approve approve) {
+
+        if(approve.getWoNumber() != null){
+            Workorder workorder = workorderRepository.findByWoNumber(approve.getWoNumber());
+
+            if(workorder != null) {
+
+                for (nl.guyonmaissan.Garage.model.WorkorderRow workorderRow : approve.getWorkorderRows()) {
+
+                    if(workorderRow.getDescription() != null || workorderRow.getDescription() != "") {
+                        WorkorderRow updateRow = workorderRowRepository.findWorkorderRowByWorkorderAndDescription(workorder,workorderRow.getDescription());
+
+                        if(updateRow != null) {
+                            updateRow.setCustomerAgreed(workorderRow.getCustomerAgreed());
+
+                            workorderRowRepository.save(updateRow);
+                        }
+                        else{
+                            return "Couldn't find any workorderRows with the description: " + workorderRow.getDescription();
+                        }
+
+                    }
+                }
+
+                return "Succesfully updated the workorder rows.";
+            }
+
+            return "Couldn't find any workorder with the ginen wo number.";
+        }
+
+        return "Please insert a wo number.";
     }
 
     @Override
@@ -114,6 +171,20 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
         workorderRow.setType(ETypeWorkorderRow.PART);
 
         workorderRowRepository.save(workorderRow);
+    }
+
+    @Override
+    public nl.guyonmaissan.Garage.model.WorkorderRow CreateApiModel(WorkorderRow dbWorkorderRow) {
+
+        nl.guyonmaissan.Garage.model.WorkorderRow workorderRow = new nl.guyonmaissan.Garage.model.WorkorderRow();
+        workorderRow.setType(dbWorkorderRow.getType());
+        workorderRow.setPrice(dbWorkorderRow.getPrice());
+        workorderRow.setDescription(dbWorkorderRow.getDescription());
+        workorderRow.setAmount(dbWorkorderRow.getAmount());
+        workorderRow.setCustomerAgreed(dbWorkorderRow.getCustomerAgreed());
+
+
+        return workorderRow;
     }
 
 }

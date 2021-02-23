@@ -1,23 +1,24 @@
-package nl.guyonmaissan.Garage.model;
+package nl.guyonmaissan.Garage.dbmodel;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.guyonmaissan.Garage.dbmodel.Role;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.List;
+import java.util.Set;
 
-@Entity(name = "Role")
-@Table(name = "role")
-public class Role {
+@Entity
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(
@@ -31,13 +32,30 @@ public class Role {
     @Column(columnDefinition = "serial")
     @Getter
     @Setter
-    private long id;
+    private Long id;
 
-    @Enumerated(EnumType.STRING)
     @Getter
     @Setter
-    private ERole name;
+    private String username;
 
-    public Role() {
+    @Getter
+    @Setter
+    private String email;
+
+    @Getter
+    @Setter
+    private String password;
+
+    @ManyToMany
+    @Getter
+    @Setter
+    @JoinTable (name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
+    public User() {
+
     }
+
 }

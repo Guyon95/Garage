@@ -1,7 +1,7 @@
 package nl.guyonmaissan.Garage.service;
 
 
-import nl.guyonmaissan.Garage.model.Role;
+import nl.guyonmaissan.Garage.dbmodel.Role;
 
 import java.util.Collection;
 import java.util.Map;

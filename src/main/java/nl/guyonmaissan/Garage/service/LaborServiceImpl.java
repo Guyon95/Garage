@@ -1,6 +1,6 @@
 package nl.guyonmaissan.Garage.service;
 
-import nl.guyonmaissan.Garage.model.Labor;
+import nl.guyonmaissan.Garage.dbmodel.Labor;
 import nl.guyonmaissan.Garage.repository.LaborRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

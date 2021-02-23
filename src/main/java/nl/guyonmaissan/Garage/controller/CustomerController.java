@@ -1,6 +1,6 @@
 package nl.guyonmaissan.Garage.controller;
 
-import nl.guyonmaissan.Garage.model.Customer;
+import nl.guyonmaissan.Garage.dbmodel.Customer;
 import nl.guyonmaissan.Garage.payload.response.MessageResponse;
 import nl.guyonmaissan.Garage.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;

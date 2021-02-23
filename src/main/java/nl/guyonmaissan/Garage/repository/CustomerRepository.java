@@ -1,6 +1,6 @@
 package nl.guyonmaissan.Garage.repository;
 
-import nl.guyonmaissan.Garage.model.Customer;
+import nl.guyonmaissan.Garage.dbmodel.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

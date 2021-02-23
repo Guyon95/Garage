@@ -1,7 +1,7 @@
 package nl.guyonmaissan.Garage.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import nl.guyonmaissan.Garage.model.User;
+import nl.guyonmaissan.Garage.dbmodel.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

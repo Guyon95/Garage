@@ -1,9 +1,8 @@
 package nl.guyonmaissan.Garage.repository;
 
-import nl.guyonmaissan.Garage.model.User;
+import nl.guyonmaissan.Garage.dbmodel.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Collection;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {

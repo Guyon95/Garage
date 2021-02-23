@@ -1,8 +1,8 @@
 package nl.guyonmaissan.Garage.service;
 
 import nl.guyonmaissan.Garage.model.ERole;
-import nl.guyonmaissan.Garage.model.Role;
-import nl.guyonmaissan.Garage.model.User;
+import nl.guyonmaissan.Garage.dbmodel.Role;
+import nl.guyonmaissan.Garage.dbmodel.User;
 import nl.guyonmaissan.Garage.payload.request.LoginRequest;
 import nl.guyonmaissan.Garage.payload.request.SignupRequest;
 import nl.guyonmaissan.Garage.payload.response.JwtResponse;

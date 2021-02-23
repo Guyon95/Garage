@@ -1,7 +1,6 @@
 package nl.guyonmaissan.Garage.controller;
 
-import nl.guyonmaissan.Garage.model.Appointment;
-import nl.guyonmaissan.Garage.model.Customer;
+import nl.guyonmaissan.Garage.dbmodel.Appointment;
 import nl.guyonmaissan.Garage.model.ReturnObject;
 import nl.guyonmaissan.Garage.payload.response.MessageResponse;
 import nl.guyonmaissan.Garage.service.AppointmentService;

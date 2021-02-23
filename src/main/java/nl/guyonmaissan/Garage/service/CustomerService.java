@@ -1,6 +1,6 @@
 package nl.guyonmaissan.Garage.service;
 
-import nl.guyonmaissan.Garage.model.Customer;
+import nl.guyonmaissan.Garage.dbmodel.Customer;
 import nl.guyonmaissan.Garage.model.ReturnObject;
 import nl.guyonmaissan.Garage.payload.response.MessageResponse;
 import org.springframework.http.ResponseEntity;

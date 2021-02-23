@@ -1,9 +1,9 @@
 package nl.guyonmaissan.Garage.service;
 
 import nl.guyonmaissan.Garage.exceptions.RecordNotFoundException;
-import nl.guyonmaissan.Garage.model.Customer;
+import nl.guyonmaissan.Garage.dbmodel.Customer;
 import nl.guyonmaissan.Garage.model.ReturnObject;
-import nl.guyonmaissan.Garage.model.Vehicle;
+import nl.guyonmaissan.Garage.dbmodel.Vehicle;
 import nl.guyonmaissan.Garage.payload.response.MessageResponse;
 import nl.guyonmaissan.Garage.repository.CustomerRepository;
 import nl.guyonmaissan.Garage.repository.VehicleRepository;

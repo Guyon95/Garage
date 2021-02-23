@@ -1,4 +1,4 @@
-package nl.guyonmaissan.Garage.model;
+package nl.guyonmaissan.Garage.dbmodel;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,33 +7,34 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 
 @Entity
-public class Appointment {
+public class Part {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
-    public Long id;
+    private Long id;
 
     @Getter
     @Setter
-    public LocalDateTime appointment;
-
-    @OneToOne
-    @Getter
-    @Setter
-    public Vehicle vehicle;
+    private int partNumber;
 
     @Getter
     @Setter
-    public LocalDateTime created;
+    private String description;
 
     @Getter
     @Setter
-    public LocalDateTime modified;
+    private double price;
 
+    @Getter
+    @Setter
+    private LocalDateTime created;
+
+    @Getter
+    @Setter
+    private LocalDateTime modified;
 }

@@ -1,10 +1,12 @@
 package nl.guyonmaissan.Garage.service;
 
 import nl.guyonmaissan.Garage.dbmodel.Part;
+import nl.guyonmaissan.Garage.model.ReturnObject;
 import nl.guyonmaissan.Garage.repository.PartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 
@@ -30,8 +32,30 @@ public class PartServiceImpl implements PartService {
     }
 
     @Override
-    public long createParts(Part part) {
-        return 0;
+    public ReturnObject createPart(nl.guyonmaissan.Garage.model.Part part) {
+        ReturnObject returnObject = new ReturnObject();
+
+        Part dbPart = partRepository.findByPartNumberOrDescription(part.getPartNumber(), part.getDescription());
+
+        if(dbPart == null){
+
+            Part newPart = new Part();
+            newPart.setDescription(part.getDescription());
+            newPart.setPartNumber(part.getPartNumber());
+            newPart.setPrice(part.getPrice());
+            newPart.setCreated(LocalDateTime.now());
+            newPart.setModified(LocalDateTime.now());
+
+            partRepository.save(newPart);
+
+            returnObject.setMessage("Succesfully added a part to the database.");
+            returnObject.setObject(newPart);
+
+            return returnObject;
+        }
+        returnObject.setMessage("Part already exists!");
+
+        return returnObject;
     }
 
     @Override
@@ -39,10 +63,6 @@ public class PartServiceImpl implements PartService {
 
     }
 
-    @Override
-    public void partialUpdateParts(Long id, Map<String, String> fields) {
-
-    }
 
     @Override
     public void deleteParts(Long id) {

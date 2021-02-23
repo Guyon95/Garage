@@ -1,10 +1,13 @@
 package nl.guyonmaissan.Garage.service;
 
 import nl.guyonmaissan.Garage.dbmodel.Labor;
+import nl.guyonmaissan.Garage.dbmodel.Part;
+import nl.guyonmaissan.Garage.model.ReturnObject;
 import nl.guyonmaissan.Garage.repository.LaborRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 
@@ -30,9 +33,32 @@ public class LaborServiceImpl implements LaborService{
     }
 
     @Override
-    public long createLabor(Labor labor) {
-        return 0;
+    public ReturnObject createLabor(nl.guyonmaissan.Garage.model.Labor labor) {
+        ReturnObject returnObject = new ReturnObject();
+
+        Labor dbLabor = laborRepository.findByLaborNumberOrDescription(labor.getLaborNumber(), labor.getDescription());
+
+        if(dbLabor == null){
+
+            Labor newLabor = new Labor();
+            newLabor.setDescription(labor.getDescription());
+            newLabor.setLaborNumber(labor.getLaborNumber());
+            newLabor.setPrice(labor.getPrice());
+            newLabor.setCreated(LocalDateTime.now());
+            newLabor.setModified(LocalDateTime.now());
+
+            laborRepository.save(newLabor);
+
+            returnObject.setMessage("Succesfully added a labor to the database.");
+            returnObject.setObject(newLabor);
+
+            return returnObject;
+        }
+        returnObject.setMessage("Labor already exists!");
+
+        return returnObject;
     }
+
 
     @Override
     public void updateLabor(Long id, Labor labor) {

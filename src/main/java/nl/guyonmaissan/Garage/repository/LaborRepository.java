@@ -8,4 +8,6 @@ public interface LaborRepository extends JpaRepository<Labor,Long> {
     Labor findByDescription(String description);
 
     Labor findByLaborNumber(int laborNumber);
+
+    Labor findByLaborNumberOrDescription(int laborNumber, String description);
 }

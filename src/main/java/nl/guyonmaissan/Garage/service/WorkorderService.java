@@ -13,15 +13,16 @@ import java.util.List;
 public interface WorkorderService {
 
     List<Workorder> getAllWorkorders();
-    Workorder getWorkorderById(Long id);
-    Workorder getWorkorderByWoNumber(Long woNumber);
+
     ReturnObject createWorkorder(WorkorderVehicle workorderVehicle);
 
     String updateWorkorder(AddWorkorderRow addWorkorderRow);
 
     String addOtherAction(OtherAction otherAction);
 
+    String repairsExcuted(Long woNumber);
 
+    List<Workorder> getFinishedWos();
 
     void deleteWorkorder(Long id);
 }

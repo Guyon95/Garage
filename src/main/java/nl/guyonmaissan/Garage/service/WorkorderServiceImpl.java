@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,15 +38,6 @@ public class WorkorderServiceImpl implements WorkorderService {
         return workorderRepository.findAll();
     }
 
-    @Override
-    public Workorder getWorkorderById(Long id) {
-        return workorderRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public Workorder getWorkorderByWoNumber(Long woNumber) {
-        return workorderRepository.findByWoNumber(woNumber); //.orElse(null);
-    }
 
     @Override
     public ReturnObject createWorkorder(WorkorderVehicle workorderVehicle) {
@@ -53,7 +45,15 @@ public class WorkorderServiceImpl implements WorkorderService {
         Vehicle vehicle = vehicleRepository.findByLicensePlate(workorderVehicle.getVehicle().getLicensePlate());
 
         if(vehicle != null) {
+            Workorder lastWorkorder = workorderRepository.findTopByOrderByCreatedDesc();
+            Long newWoNumber = 10000L;
+
+            if(lastWorkorder != null){
+                newWoNumber = lastWorkorder.getWoNumber() + 1;
+            }
+
             Workorder workorder = workorderVehicle.getWorkorder();
+            workorder.setWoNumber(newWoNumber);
             workorder.setVehicle(vehicle);
             workorder.setCreated(LocalDateTime.now());
             workorder.setModified(LocalDateTime.now());
@@ -119,6 +119,29 @@ public class WorkorderServiceImpl implements WorkorderService {
         return "Please fill the wo number.";
     }
 
+    @Override
+    public String repairsExcuted(Long woNumber) {
+        Workorder workorder = workorderRepository.findByWoNumber(woNumber);
+
+        if(workorder != null){
+            workorder.setStatus(EWorkorderStatus.REPAIRS_EXCUTED);
+            workorderRepository.save(workorder);
+
+            return "Repairs has been succesfully excuted!";
+        }
+        return "Couldn't find any workorders with the WO number: " + woNumber.toString();
+    }
+
+    @Override
+    public List<Workorder> getFinishedWos() {
+
+        List<Workorder> workorders = new ArrayList<>();
+
+        workorders.addAll(workorderRepository.findWorkordersByStatus(EWorkorderStatus.DO_NOT_EXCUTE));
+        workorders.addAll(workorderRepository.findWorkordersByStatus(EWorkorderStatus.REPAIRS_EXCUTED));
+
+        return workorders;
+    }
 
 
     @Override

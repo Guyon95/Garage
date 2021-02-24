@@ -1,10 +1,12 @@
 package nl.guyonmaissan.Garage.service;
 
+import nl.guyonmaissan.Garage.exceptions.RecordNotFoundException;
 import nl.guyonmaissan.Garage.model.AddLabor;
 import nl.guyonmaissan.Garage.model.AddPart;
 import nl.guyonmaissan.Garage.model.Approve;
 import nl.guyonmaissan.Garage.model.ApproveWorkorderRow;
 import nl.guyonmaissan.Garage.model.ETypeWorkorderRow;
+import nl.guyonmaissan.Garage.model.EWorkorderStatus;
 import nl.guyonmaissan.Garage.model.OtherAction;
 import nl.guyonmaissan.Garage.dbmodel.Workorder;
 import nl.guyonmaissan.Garage.dbmodel.WorkorderRow;
@@ -92,7 +94,6 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
 
     @Override
     public String approveWorkorderRows(Approve approve) {
-
         if(approve.getWoNumber() != null){
             Workorder workorder = workorderRepository.findByWoNumber(approve.getWoNumber());
 
@@ -104,9 +105,17 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
                         WorkorderRow updateRow = workorderRowRepository.findWorkorderRowByWorkorderAndDescription(workorder,workorderRow.getDescription());
 
                         if(updateRow != null) {
-                            updateRow.setCustomerAgreed(workorderRow.getCustomerAgreed());
 
-                            workorderRowRepository.save(updateRow);
+                            if (workorderRow.getCustomerAgreed().equals(true)){
+                                updateRow.setCustomerAgreed(workorderRow.getCustomerAgreed());
+
+                                workorderRowRepository.save(updateRow);
+                            }
+                            else{
+
+                                workorderRowRepository.deleteById(updateRow.getId());
+                            }
+
                         }
                         else{
                             return "Couldn't find any workorderRows with the description: " + workorderRow.getDescription();
@@ -114,6 +123,17 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
 
                     }
                 }
+
+                List<WorkorderRow> workorderRows = workorderRowRepository.findWorkorderRowByWorkorder(workorder);
+
+                if(workorderRows.stream().count() > 1) {
+                    workorder.setStatus(EWorkorderStatus.READY_TO_START);
+                }
+                else{
+                    workorder.setStatus(EWorkorderStatus.DO_NOT_EXCUTE);
+                }
+
+                workorderRepository.save(workorder);
 
                 return "Succesfully updated the workorder rows.";
             }

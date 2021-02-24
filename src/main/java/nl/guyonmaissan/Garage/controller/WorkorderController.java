@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +54,17 @@ public class WorkorderController {
         return ResponseEntity.ok(new MessageResponse(workorderService.addOtherAction(otherAction)));
     }
 
+    @GetMapping(value = "/excute/{woNumber}")
+    @PreAuthorize("hasRole('MECHANIC')")
+    public ResponseEntity<MessageResponse> repairsExcuted(@PathVariable ("woNumber") Long woNumber) {
+        return ResponseEntity.ok().body(new MessageResponse(workorderService.repairsExcuted(woNumber)));
+    }
+
+    @GetMapping(value = "/call")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    public ResponseEntity<Object> getFinishedWOs() {
+        return ResponseEntity.ok().body(workorderService.getFinishedWos());
+    }
 
 }
 

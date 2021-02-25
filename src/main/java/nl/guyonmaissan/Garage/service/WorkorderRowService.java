@@ -29,5 +29,7 @@ public interface WorkorderRowService {
 
     nl.guyonmaissan.Garage.model.WorkorderRow CreateApiModel (WorkorderRow dbWorkorderRow);
 
+    nl.guyonmaissan.Garage.model.WorkorderRow CreateInvoiceRow(WorkorderRow dbWorkorderRow);
+
 
 }

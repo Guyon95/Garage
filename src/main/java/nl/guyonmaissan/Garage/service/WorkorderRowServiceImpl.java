@@ -1,10 +1,8 @@
 package nl.guyonmaissan.Garage.service;
 
-import nl.guyonmaissan.Garage.exceptions.RecordNotFoundException;
 import nl.guyonmaissan.Garage.model.AddLabor;
 import nl.guyonmaissan.Garage.model.AddPart;
 import nl.guyonmaissan.Garage.model.Approve;
-import nl.guyonmaissan.Garage.model.ApproveWorkorderRow;
 import nl.guyonmaissan.Garage.model.ETypeWorkorderRow;
 import nl.guyonmaissan.Garage.model.EWorkorderStatus;
 import nl.guyonmaissan.Garage.model.OtherAction;
@@ -199,6 +197,21 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
         nl.guyonmaissan.Garage.model.WorkorderRow workorderRow = new nl.guyonmaissan.Garage.model.WorkorderRow();
         workorderRow.setType(dbWorkorderRow.getType());
         workorderRow.setPrice(dbWorkorderRow.getPrice());
+        workorderRow.setDescription(dbWorkorderRow.getDescription());
+        workorderRow.setAmount(dbWorkorderRow.getAmount());
+        workorderRow.setCustomerAgreed(dbWorkorderRow.getCustomerAgreed());
+
+
+        return workorderRow;
+    }
+
+    @Override
+    public nl.guyonmaissan.Garage.model.WorkorderRow CreateInvoiceRow(WorkorderRow dbWorkorderRow) {
+
+        nl.guyonmaissan.Garage.model.WorkorderRow workorderRow = new nl.guyonmaissan.Garage.model.WorkorderRow();
+
+        workorderRow.setType(dbWorkorderRow.getType());
+        workorderRow.setPrice(dbWorkorderRow.getPrice() * 1.21);
         workorderRow.setDescription(dbWorkorderRow.getDescription());
         workorderRow.setAmount(dbWorkorderRow.getAmount());
         workorderRow.setCustomerAgreed(dbWorkorderRow.getCustomerAgreed());

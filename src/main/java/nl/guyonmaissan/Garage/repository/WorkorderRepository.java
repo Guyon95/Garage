@@ -11,6 +11,8 @@ public interface WorkorderRepository extends JpaRepository<Workorder,Long> {
 
     Workorder findTopByOrderByCreatedDesc();
 
+    Workorder findTopByOrderByInvoiceNumberDesc();
+
     List<Workorder> findWorkordersByStatus(EWorkorderStatus status);
 
 }

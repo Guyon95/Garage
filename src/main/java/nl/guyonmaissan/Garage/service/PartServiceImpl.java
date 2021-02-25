@@ -2,6 +2,7 @@ package nl.guyonmaissan.Garage.service;
 
 import nl.guyonmaissan.Garage.dbmodel.Part;
 import nl.guyonmaissan.Garage.model.ReturnObject;
+import nl.guyonmaissan.Garage.model.WorkorderRow;
 import nl.guyonmaissan.Garage.repository.PartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,5 +75,17 @@ public class PartServiceImpl implements PartService {
         Part part = partRepository.findByPartNumber(partNumber);
 
         return part;
+    }
+
+    @Override
+    public void changeStock(WorkorderRow workorderRow) {
+        Part part = partRepository.findByDescription(workorderRow.getDescription());
+
+        if(part != null){
+            part.setStock(part.getStock() - workorderRow.getAmount());
+            part.setModified(LocalDateTime.now());
+            partRepository.save(part);
+
+        }
     }
 }

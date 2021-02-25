@@ -2,6 +2,7 @@ package nl.guyonmaissan.Garage.service;
 
 import nl.guyonmaissan.Garage.dbmodel.Part;
 import nl.guyonmaissan.Garage.model.ReturnObject;
+import nl.guyonmaissan.Garage.model.WorkorderRow;
 
 import java.util.Collection;
 import java.util.Map;
@@ -16,5 +17,7 @@ public interface PartService {
 
     void deleteParts(Long id);
     Part getRow(int partNumber);
+
+    void changeStock(WorkorderRow workorderRow);
 
 }

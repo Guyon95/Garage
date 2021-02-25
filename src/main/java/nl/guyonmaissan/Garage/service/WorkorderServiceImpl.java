@@ -1,15 +1,6 @@
 package nl.guyonmaissan.Garage.service;
 
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfDocument;
-import com.itextpdf.text.pdf.PdfWriter;
+
 import nl.guyonmaissan.Garage.dbmodel.WorkorderRow;
 import nl.guyonmaissan.Garage.exceptions.RecordNotFoundException;
 import nl.guyonmaissan.Garage.model.AddLabor;
@@ -28,17 +19,6 @@ import nl.guyonmaissan.Garage.repository.WorkorderRowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +38,9 @@ public class WorkorderServiceImpl implements WorkorderService {
 
     @Autowired
     private WorkorderRowService workorderRowService;
+
+    @Autowired
+    private PartService partService;
 
     @Override
     public List<Workorder> getAllWorkorders() {
@@ -200,10 +183,12 @@ public class WorkorderServiceImpl implements WorkorderService {
                 total += workorderRow.getPrice();
 
             }
+
             Workorder lastInvoiceNumber = workorderRepository.findTopByOrderByInvoiceNumberDesc();
+
             Long newInvoiceNumber = 1000L;
 
-            if(lastInvoiceNumber != null){
+            if(lastInvoiceNumber.getInvoiceNumber() != null){
                 newInvoiceNumber = lastInvoiceNumber.getInvoiceNumber() +1;
             }
 
@@ -214,10 +199,17 @@ public class WorkorderServiceImpl implements WorkorderService {
                 invoice.setInvoiceNumber(newInvoiceNumber);
                 invoice.setTotal(total);
 
+
+                //change stock value
+                for(nl.guyonmaissan.Garage.model.WorkorderRow stockRow : workorderRows){
+                    partService.changeStock(stockRow);
+                }
+
                 returnObject.setObject(invoice);
                 returnObject.setMessage("Created succesfully a invoice.");
 
                 workorder.setStatus(EWorkorderStatus.INVOICED);
+                workorder.setInvoiceNumber(newInvoiceNumber);
                 workorderRepository.save(workorder);
 
                 return returnObject;

@@ -8,4 +8,6 @@ public interface PartRepository extends JpaRepository<Part,Long> {
     Part findByPartNumber ( int partNumber);
 
     Part findByPartNumberOrDescription(int partNumber, String description);
+
+    Part findByDescription(String description);
 }

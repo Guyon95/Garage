@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 @RequestMapping(value = "/workorder")
 @PreAuthorize("hasRole('ADMINISTRATOR') or hasRole('MECHANIC')")
@@ -65,6 +66,13 @@ public class WorkorderController {
     public ResponseEntity<Object> getFinishedWOs() {
         return ResponseEntity.ok().body(workorderService.getFinishedWos());
     }
+
+    @GetMapping(value = "/invoice/{woNumber}")
+    @PreAuthorize("hasRole('CASHIER')")
+    public ResponseEntity<Object> createInvoice(@PathVariable ("woNumber") Long woNumber) {
+        return ResponseEntity.ok().body(workorderService.createInvoice(woNumber));
+    }
+
 
 }
 

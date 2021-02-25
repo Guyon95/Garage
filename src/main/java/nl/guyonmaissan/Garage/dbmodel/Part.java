@@ -37,4 +37,8 @@ public class Part {
     @Getter
     @Setter
     private LocalDateTime modified;
+
+    @Getter
+    @Setter
+    private int stock;
 }

@@ -1,6 +1,7 @@
 package nl.guyonmaissan.Garage.controller;
 
 
+import nl.guyonmaissan.Garage.dbmodel.Workorder;
 import nl.guyonmaissan.Garage.model.AddWorkorderRow;
 import nl.guyonmaissan.Garage.model.OtherAction;
 import nl.guyonmaissan.Garage.model.ReturnObject;
@@ -8,7 +9,6 @@ import nl.guyonmaissan.Garage.model.WorkorderVehicle;
 import nl.guyonmaissan.Garage.payload.response.MessageResponse;
 import nl.guyonmaissan.Garage.service.WorkorderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,19 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 
 @RestController
 @RequestMapping(value = "/workorder")
-@PreAuthorize("hasRole('ADMINISTRATOR') or hasRole('MECHANIC')")
+@PreAuthorize("hasRole('ADMINISTRATOR') or hasRole('MECHANIC') or hasRole('CASHIER')")
 public class WorkorderController {
 
     @Autowired
@@ -81,7 +75,17 @@ public class WorkorderController {
         return ResponseEntity.ok().body(workorderService.createInvoice(woNumber));
     }
 
+    @PostMapping(value = "/updateAppointment")
+    @PreAuthorize("hasRole('MECHANIC')")
+    public ResponseEntity<MessageResponse> updateAppointment(@RequestBody Workorder workorder) {
+        return ResponseEntity.ok(new MessageResponse(workorderService.updateAppoinment(workorder)));
+    }
 
+    @PostMapping(value = "/customerPaid")
+    @PreAuthorize("hasRole('CASHIER')")
+    public ResponseEntity<MessageResponse> customerPaid(@RequestBody Long woNumber) {
+        return ResponseEntity.ok(new MessageResponse(workorderService.customerPaid(woNumber)));
+    }
 
 
 }

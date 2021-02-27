@@ -1,8 +1,10 @@
 package nl.guyonmaissan.Garage.controller;
 
 import nl.guyonmaissan.Garage.dbmodel.Customer;
+import nl.guyonmaissan.Garage.model.ReturnObject;
 import nl.guyonmaissan.Garage.payload.response.MessageResponse;
 import nl.guyonmaissan.Garage.service.CustomerService;
+import nl.guyonmaissan.Garage.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,6 +29,9 @@ public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    VehicleService vehicleService;
 
 
     @GetMapping(value = "")
@@ -56,13 +61,10 @@ public class CustomerController {
 
     @PostMapping(value = "create")
     @PreAuthorize("hasRole('ADMINISTRATOR')")
-    public ResponseEntity<Object> createCustomer(@RequestBody nl.guyonmaissan.Garage.model.Customer customer) {
-        long newId = customerService.createCustomer(customer);
+    public ResponseEntity<Object> createVehicle(@RequestBody nl.guyonmaissan.Garage.model.Customer customer) {
+        ReturnObject returnObject = vehicleService.createVehicle(customer);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newId).toUri();
-
-        return ResponseEntity.created(location).body(location);
+        return ResponseEntity.ok().body(returnObject);
     }
 
     @PostMapping("/update")

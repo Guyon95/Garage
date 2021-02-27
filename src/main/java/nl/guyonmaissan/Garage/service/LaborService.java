@@ -8,14 +8,7 @@ import java.util.Map;
 
 public interface LaborService {
 
-    Collection<Labor> getAllLabor();
-    Labor getLaborById(Long id);
-    Labor getLaborByDescription(String description);
-    ReturnObject createLabor(nl.guyonmaissan.Garage.model.Labor labor);
-    void updateLabor(Long id, Labor labor);
-    void partialUpdateLabor(Long id, Map<String, String> fields);
-    void deleteLabor(Long id);
-
+    ReturnObject createLabor(Labor labor);
     Labor getCheckCar();
     Labor getRow(int rowNumber);
 

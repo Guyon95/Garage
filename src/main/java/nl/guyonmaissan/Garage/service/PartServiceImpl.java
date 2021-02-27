@@ -18,22 +18,7 @@ public class PartServiceImpl implements PartService {
     PartRepository partRepository;
 
     @Override
-    public Collection<Part> getAllParts() {
-        return null;
-    }
-
-    @Override
-    public Part getPartsById(Long id) {
-        return null;
-    }
-
-    @Override
-    public Part getParts(String description) {
-        return null;
-    }
-
-    @Override
-    public ReturnObject createPart(nl.guyonmaissan.Garage.model.Part part) {
+    public ReturnObject createPart(Part part) {
         ReturnObject returnObject = new ReturnObject();
 
         Part dbPart = partRepository.findByPartNumberOrDescription(part.getPartNumber(), part.getDescription());
@@ -57,17 +42,6 @@ public class PartServiceImpl implements PartService {
         returnObject.setMessage("Part already exists!");
 
         return returnObject;
-    }
-
-    @Override
-    public void updateParts(Long id, Part part) {
-
-    }
-
-
-    @Override
-    public void deleteParts(Long id) {
-
     }
 
     @Override

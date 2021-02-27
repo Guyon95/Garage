@@ -8,9 +8,15 @@ import nl.guyonmaissan.Garage.payload.response.MessageResponse;
 import nl.guyonmaissan.Garage.repository.CustomerRepository;
 import nl.guyonmaissan.Garage.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -20,10 +26,10 @@ import java.util.stream.Collectors;
 public class CustomerServiceImpl implements CustomerService{
 
     @Autowired
-    CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
 
     @Autowired
-    VehicleRepository vehicleRepository;
+    private VehicleRepository vehicleRepository;
 
     @Override
     public Collection<Customer> getAllCustomers() {
@@ -86,9 +92,18 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public long createCustomer(Customer customer) {
-        Customer storedCustomer = customerRepository.save(customer);
-        return storedCustomer.getId();
+    public Customer createCustomer(String firstname, String lastname, String phoneNumber) {
+
+        Customer dbCustomer = new Customer();
+        dbCustomer.setFirstName(firstname);
+        dbCustomer.setLastName(lastname);
+        dbCustomer.setPhoneNumber(phoneNumber);
+        dbCustomer.setCreated(LocalDateTime.now());
+        dbCustomer.setModified(LocalDateTime.now());
+
+        Customer storedCustomer = customerRepository.save(dbCustomer);
+
+        return storedCustomer;
     }
 
     @Override
@@ -106,6 +121,22 @@ public class CustomerServiceImpl implements CustomerService{
             return ResponseEntity.ok(new MessageResponse("Customer has been updated!"));
         }
         return ResponseEntity.ok(new MessageResponse("No, customer found!"));
+    }
+
+    @Override
+    public ResponseEntity<MessageResponse> addCarPapers(MultipartFile file, String licensePlate) {
+        if (null == file.getOriginalFilename()) {
+            return ResponseEntity.ok(new MessageResponse("Failed to add the car papers to the car."));
+        }
+        try {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(file.getOriginalFilename());
+            Files.write(path, bytes);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return ResponseEntity.ok(new MessageResponse("Added Car papers!"));
     }
 
 

@@ -152,15 +152,6 @@ public class WorkorderServiceImpl implements WorkorderService {
         return workorders;
     }
 
-
-    @Override
-    public void deleteWorkorder(Long id) {
-        if (!workorderRepository.existsById(id)) {
-            throw new RecordNotFoundException();
-        }
-        workorderRepository.deleteById(id);
-    }
-
     @Override
     public ReturnObject createInvoice(Long woNumber) {
         ReturnObject returnObject = new ReturnObject();
@@ -223,6 +214,42 @@ public class WorkorderServiceImpl implements WorkorderService {
 
         returnObject.setMessage("Please insert a valid value for WO number! ");
         return returnObject;
+    }
+
+    @Override
+    public String updateAppoinment(Workorder workorder) {
+        Workorder updateWO = workorderRepository.findByWoNumber(workorder.getWoNumber());
+
+        if (updateWO != null) {
+            if(!workorder.getAppointment().isBefore(LocalDateTime.now())){
+                updateWO.setAppointment(workorder.getAppointment());
+                workorderRepository.save(updateWO);
+
+                return "Appointment has been succesfully updated!";
+            }
+
+
+            return "Couldn't update appointment because it's in the past!";
+        }
+        return "Couldn't find any workorders with the WO number: " + workorder.getWoNumber().toString();
+    }
+
+    @Override
+    public String customerPaid(Long woNumber) {
+        if(woNumber != 0){
+            Workorder workorder = workorderRepository.findByWoNumber(woNumber);
+
+            if(workorder != null){
+                workorder.setStatus(EWorkorderStatus.PAID);
+                workorderRepository.save(workorder);
+
+                return "The customer paid the workorder.";
+            }
+
+            return "Couldn't find a workorder with the given WO number: " +woNumber;
+        }
+
+        return "Please insert a valid WO number.";
     }
 }
 

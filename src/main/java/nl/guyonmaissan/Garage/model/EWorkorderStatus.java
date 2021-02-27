@@ -12,6 +12,8 @@ public enum EWorkorderStatus {
 
     CHECK_CAR,
 
+    PAID,
+
     AWAITING_APPROVAL
 
 }

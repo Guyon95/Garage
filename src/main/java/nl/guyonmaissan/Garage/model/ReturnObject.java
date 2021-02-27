@@ -13,7 +13,6 @@ public class ReturnObject {
 
     public Object object;
 
-    //public ResponseEntity<MessageResponse> message;
 
 
 }

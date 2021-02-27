@@ -1,5 +1,6 @@
 package nl.guyonmaissan.Garage.controller;
 
+import nl.guyonmaissan.Garage.dbmodel.Labor;
 import nl.guyonmaissan.Garage.model.ReturnObject;
 import nl.guyonmaissan.Garage.service.LaborService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class LaborController {
 
     @PostMapping(value = "/create")
     @PreAuthorize("hasRole('BACKOFFICE')")
-    public ResponseEntity<Object> createPart(@RequestBody nl.guyonmaissan.Garage.model.Labor labor) {
+    public ResponseEntity<Object> createPart(@RequestBody Labor labor) {
 
         ReturnObject returnObject = laborService.createLabor(labor);
 

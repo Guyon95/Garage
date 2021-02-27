@@ -11,15 +11,9 @@ import java.util.Collection;
 import java.util.List;
 
 public interface WorkorderRowService {
-    Collection<WorkorderRow> getAllWorkorderRows();
-    WorkorderRow getWorkorderRowById(Long id);
     List<nl.guyonmaissan.Garage.model.WorkorderRow> getWorkorderRowByWoNummer(Long woNumber);
 
     void createWorkorderRow(OtherAction otherAction, Workorder workorder);
-
-    void updateWorkorderRow(Long id, WorkorderRow woNummer);
-
-    void deleteWorkorderRow(Long id);
 
     String approveWorkorderRows (Approve approve);
 

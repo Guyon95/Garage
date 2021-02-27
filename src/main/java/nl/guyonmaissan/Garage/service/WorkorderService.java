@@ -27,6 +27,9 @@ public interface WorkorderService {
 
     ReturnObject createInvoice(Long woNumber);
 
-    void deleteWorkorder(Long id);
+    String updateAppoinment(Workorder workorder);
+
+    String customerPaid(Long woNumber);
+
 
 }

@@ -1,5 +1,6 @@
 package nl.guyonmaissan.Garage.controller;
 
+import nl.guyonmaissan.Garage.dbmodel.Part;
 import nl.guyonmaissan.Garage.model.ReturnObject;
 import nl.guyonmaissan.Garage.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class PartController {
 
     @PostMapping(value = "/create")
     @PreAuthorize("hasRole('BACKOFFICE')")
-    public ResponseEntity<Object> createPart(@RequestBody nl.guyonmaissan.Garage.model.Part part) {
+    public ResponseEntity<Object> createPart(@RequestBody Part part) {
 
         ReturnObject returnObject = partService.createPart(part);
 

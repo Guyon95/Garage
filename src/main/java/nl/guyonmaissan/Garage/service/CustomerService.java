@@ -17,8 +17,8 @@ public interface CustomerService {
 
     ReturnObject getCustomerByLicensePlate(String licensePlate);
 
-    //Collection<Customer> getCustomers(String name);
-    long createCustomer(nl.guyonmaissan.Garage.model.Customer customer);
+    Customer createCustomer(String firstname, String lastname, String phoneNumber);
+
     ResponseEntity<MessageResponse> updateCustomer(Customer customer);
 
     ResponseEntity<MessageResponse> addCarPapers(MultipartFile file, String licensePlate);

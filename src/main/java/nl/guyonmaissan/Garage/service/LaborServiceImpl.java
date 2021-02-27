@@ -1,15 +1,12 @@
 package nl.guyonmaissan.Garage.service;
 
 import nl.guyonmaissan.Garage.dbmodel.Labor;
-import nl.guyonmaissan.Garage.dbmodel.Part;
 import nl.guyonmaissan.Garage.model.ReturnObject;
 import nl.guyonmaissan.Garage.repository.LaborRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Map;
 
 @Service
 public class LaborServiceImpl implements LaborService{
@@ -18,22 +15,7 @@ public class LaborServiceImpl implements LaborService{
     private LaborRepository laborRepository;
 
     @Override
-    public Collection<Labor> getAllLabor() {
-        return null;
-    }
-
-    @Override
-    public Labor getLaborById(Long id) {
-        return null;
-    }
-
-    @Override
-    public Labor getLaborByDescription(String description) {
-        return null;
-    }
-
-    @Override
-    public ReturnObject createLabor(nl.guyonmaissan.Garage.model.Labor labor) {
+    public ReturnObject createLabor(Labor labor) {
         ReturnObject returnObject = new ReturnObject();
 
         Labor dbLabor = laborRepository.findByLaborNumberOrDescription(labor.getLaborNumber(), labor.getDescription());
@@ -59,21 +41,6 @@ public class LaborServiceImpl implements LaborService{
         return returnObject;
     }
 
-
-    @Override
-    public void updateLabor(Long id, Labor labor) {
-
-    }
-
-    @Override
-    public void partialUpdateLabor(Long id, Map<String, String> fields) {
-
-    }
-
-    @Override
-    public void deleteLabor(Long id) {
-
-    }
 
     @Override
     public Labor getCheckCar(){

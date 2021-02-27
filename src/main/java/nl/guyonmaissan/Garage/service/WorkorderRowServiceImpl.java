@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -32,16 +31,6 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
 
     @Autowired
     private WorkorderRepository workorderRepository;
-
-    @Override
-    public Collection<WorkorderRow> getAllWorkorderRows() {
-        return null;
-    }
-
-    @Override
-    public WorkorderRow getWorkorderRowById(Long id) {
-        return null;
-    }
 
     @Override
     public List<nl.guyonmaissan.Garage.model.WorkorderRow> getWorkorderRowByWoNummer(Long woNumber) {
@@ -78,16 +67,6 @@ public class WorkorderRowServiceImpl implements WorkorderRowService {
         workorderRow.setType(ETypeWorkorderRow.LABOR);
 
         workorderRowRepository.save(workorderRow);
-    }
-
-    @Override
-    public void updateWorkorderRow(Long id, WorkorderRow woNummer) {
-
-    }
-
-    @Override
-    public void deleteWorkorderRow(Long id) {
-
     }
 
     @Override

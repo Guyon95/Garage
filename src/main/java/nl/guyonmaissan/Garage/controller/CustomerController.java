@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+
 
 @RestController
 @RequestMapping(value = "/customers")
@@ -53,7 +56,7 @@ public class CustomerController {
 
     @PostMapping(value = "create")
     @PreAuthorize("hasRole('ADMINISTRATOR')")
-    public ResponseEntity<Object> createCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<Object> createCustomer(@RequestBody nl.guyonmaissan.Garage.model.Customer customer) {
         long newId = customerService.createCustomer(customer);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -71,5 +74,11 @@ public class CustomerController {
     public ResponseEntity<Object> deleteCourse(@PathVariable("id") long id) {
         customerService.deleteCustomer(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/upload")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    public ResponseEntity<MessageResponse> uploadFile(@RequestPart("file") MultipartFile file, @RequestPart("licensePlate") String licensePlate) {
+        return customerService.addCarPapers(file,licensePlate);
     }
 }

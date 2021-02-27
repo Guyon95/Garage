@@ -12,11 +12,11 @@ INSERT INTO labor(labor_number,description,price,created,modified) VALUES (103,'
 INSERT INTO labor(labor_number,description,price,created,modified) VALUES (104,'Change motoroil',9.99,NOW(),NOW());
 INSERT INTO labor(labor_number,description,price,created,modified) VALUES (105,'Change tyre(s)',25.00,NOW(),NOW());
 
-INSERT INTO part(part_number,description,price,created,modified) VALUES (101,'Windshield wipers',7.50,NOW(),NOW());
-INSERT INTO part(part_number,description,price,created,modified) VALUES (102,'Motoroil 1L',19.50,NOW(),NOW());
-INSERT INTO part(part_number,description,price,created,modified) VALUES (103,'Tyre',102.99,NOW(),NOW());
-INSERT INTO part(part_number,description,price,created,modified) VALUES (104,'Brakes',14.95,NOW(),NOW());
-INSERT INTO part(part_number,description,price,created,modified) VALUES (105,'Fuse',1.99,NOW(),NOW());
+INSERT INTO part(part_number,description,price,created,modified,stock) VALUES (101,'Windshield wipers',7.50,NOW(),NOW(),10);
+INSERT INTO part(part_number,description,price,created,modified,stock) VALUES (102,'Motoroil 1L',19.50,NOW(),NOW(),21);
+INSERT INTO part(part_number,description,price,created,modified,stock) VALUES (103,'Tyre',102.99,NOW(),NOW(),16);
+INSERT INTO part(part_number,description,price,created,modified,stock) VALUES (104,'Brakes',14.95,NOW(),NOW(),10);
+INSERT INTO part(part_number,description,price,created,modified,stock) VALUES (105,'Fuse',1.99,NOW(),NOW(),7);
 
 INSERT INTO customer(first_Name,last_Name,phone_Number,created,modified) VALUES ('Peter','Janssen','0612345678',NOW(),NOW());
 INSERT INTO customer(first_Name,last_Name,phone_Number,created,modified) VALUES ('Peter','Hielkema','0687654321',NOW(),NOW());

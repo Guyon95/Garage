@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 
 
 @RestController
@@ -40,21 +38,16 @@ public class CustomerController {
         return ResponseEntity.ok().body(customerService.getAllCustomers());
     }
 
-    @GetMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ADMINISTRATOR')")
-    public ResponseEntity<Object> getCustomer(@PathVariable("id") long id) {
-        return ResponseEntity.ok().body(customerService.getCustomerById(id));
-    }
 
     @GetMapping(value = "/licenseplate/{licensePlate}")
     @PreAuthorize("hasRole('ADMINISTRATOR')")
-    public ResponseEntity<Object> getCustomer(@PathVariable("licensePlate") String licensePlate) {
+    public ResponseEntity<Object> getCustomerByLicensePlate(@PathVariable("licensePlate") String licensePlate) {
         return ResponseEntity.ok().body(customerService.getCustomerByLicensePlate(licensePlate));
     }
 
     @PostMapping(value = "")
     @PreAuthorize("hasRole('ADMINISTRATOR')")
-    public ResponseEntity<Object> getCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<Object> getCustomerMultipleValues(@RequestBody Customer customer) {
         return ResponseEntity.ok().body(customerService.getCustomers(customer));
     }
 

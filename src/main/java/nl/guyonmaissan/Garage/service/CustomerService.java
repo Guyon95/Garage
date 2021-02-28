@@ -11,8 +11,8 @@ import java.util.List;
 
 public interface CustomerService {
 
-    Collection<Customer> getAllCustomers();
-    Customer getCustomerById(Long id);
+    List<Customer> getAllCustomers();
+
     List<Customer> getCustomers(Customer customer);
 
     ReturnObject getCustomerByLicensePlate(String licensePlate);

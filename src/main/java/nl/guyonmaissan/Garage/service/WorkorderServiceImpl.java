@@ -2,7 +2,6 @@ package nl.guyonmaissan.Garage.service;
 
 
 import nl.guyonmaissan.Garage.dbmodel.WorkorderRow;
-import nl.guyonmaissan.Garage.exceptions.RecordNotFoundException;
 import nl.guyonmaissan.Garage.model.AddLabor;
 import nl.guyonmaissan.Garage.model.AddPart;
 import nl.guyonmaissan.Garage.model.AddWorkorderRow;
@@ -88,28 +87,30 @@ public class WorkorderServiceImpl implements WorkorderService {
         if (addWorkorderRow.getWorkorder().getWoNumber() != null) {
             Workorder workorder = workorderRepository.findByWoNumber(addWorkorderRow.getWorkorder().getWoNumber());
 
-            //ToDo null afvangen
-            if (addWorkorderRow.getAddParts() != null) {
-                for (AddPart part : addWorkorderRow.addParts) {
-                    workorderRowService.AddPart(part, workorder);
+            if(workorder != null) {
+                if (addWorkorderRow.getAddParts() != null) {
+                    for (AddPart part : addWorkorderRow.addParts) {
+                        workorderRowService.AddPart(part, workorder);
+                    }
                 }
-            }
 
-            if (addWorkorderRow.getAddLabors() != null) {
-                for (AddLabor labor : addWorkorderRow.addLabors) {
-                    workorderRowService.AddLabor(labor, workorder);
+                if (addWorkorderRow.getAddLabors() != null) {
+                    for (AddLabor labor : addWorkorderRow.addLabors) {
+                        workorderRowService.AddLabor(labor, workorder);
+                    }
                 }
+
+                workorder.setStatus(EWorkorderStatus.AWAITING_APPROVAL);
+                workorderRepository.save(workorder);
+
+                Long count = addWorkorderRow.getAddLabors().stream().count() + addWorkorderRow.getAddParts().stream().count();
+
+                return "Succesfully added " + count + " row(s).";
             }
-
-            workorder.setStatus(EWorkorderStatus.AWAITING_APPROVAL);
-            workorderRepository.save(workorder);
-
-            Long count = addWorkorderRow.getAddLabors().stream().count() + addWorkorderRow.getAddParts().stream().count();
-
-            return "Succesfully added " + count + " row(s).";
+            return "Couldn't find a workorder with the given WO number.";
 
         }
-        return "Couldn't find a workorder.";
+        return "Please insert a valid value for WO number";
     }
 
     @Override

@@ -8,7 +8,6 @@ import nl.guyonmaissan.Garage.payload.response.MessageResponse;
 import nl.guyonmaissan.Garage.repository.CustomerRepository;
 import nl.guyonmaissan.Garage.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,14 +31,8 @@ public class CustomerServiceImpl implements CustomerService{
     private VehicleRepository vehicleRepository;
 
     @Override
-    public Collection<Customer> getAllCustomers() {
+    public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
-    }
-
-    @Override
-    public Customer getCustomerById(Long id) {
-        if (!customerRepository.existsById(id)) { throw new RecordNotFoundException(); }
-        return customerRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -75,19 +68,14 @@ public class CustomerServiceImpl implements CustomerService{
         Vehicle vehicle = vehicleRepository.findByLicensePlate(licensePlate);
 
         if(vehicle !=null){
-            Customer customer = customerRepository.findById(vehicle.getCustomer().getId()).orElse(null);
+            Customer customer = vehicle.getCustomer();
 
-
-            if(customer == null){
-                returnObject.setMessage("Couldn't find any appointmonts with he license plate: ${licensePlate}.");
-                return returnObject;
-            }
             returnObject.setObject(customer);
-            returnObject.setMessage("Found a customer with this license plate!");
+            returnObject.setMessage("Found a vehicle with this license plate!");
             return returnObject;
         }
 
-        returnObject.setMessage("The vehicle with license plate: ${licensePlate} doesn't exists.");
+        returnObject.setMessage("The vehicle with given license plate doesn't exists. Please create a new customer.");
         return returnObject;
     }
 

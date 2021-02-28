@@ -4,8 +4,6 @@ import nl.guyonmaissan.Garage.dbmodel.Part;
 import nl.guyonmaissan.Garage.model.ReturnObject;
 import nl.guyonmaissan.Garage.model.WorkorderRow;
 
-import java.util.Collection;
-
 
 public interface PartService {
 

@@ -24,11 +24,11 @@ INSERT INTO customer(first_Name,last_Name,phone_Number,created,modified) VALUES 
 INSERT INTO customer(first_Name,last_Name,phone_Number,created,modified) VALUES ('Darryl','Huizen','0633333333',NOW(),NOW());
 INSERT INTO customer(first_Name,last_Name,phone_Number,created,modified) VALUES ('Niels','Muller','0645894589',NOW(),NOW());
 
-INSERT INTO vehicle(license_plate,created,modified) VALUES ('AA20GM',NOW(),NOW());
-INSERT INTO vehicle(license_plate,created,modified) VALUES ('AA21GM',NOW(),NOW());
-INSERT INTO vehicle(license_plate,created,modified) VALUES ('AA22GM',NOW(),NOW());
-INSERT INTO vehicle(license_plate,created,modified) VALUES ('AA23GM',NOW(),NOW());
-INSERT INTO vehicle(license_plate,created,modified) VALUES ('AA24GM',NOW(),NOW());
+INSERT INTO vehicle(license_plate,created,modified,car_papers_uploaded) VALUES ('AA20GM',NOW(),NOW(),false);
+INSERT INTO vehicle(license_plate,created,modified,car_papers_uploaded) VALUES ('AA21GM',NOW(),NOW(),false);
+INSERT INTO vehicle(license_plate,created,modified,car_papers_uploaded) VALUES ('AA22GM',NOW(),NOW(),false);
+INSERT INTO vehicle(license_plate,created,modified,car_papers_uploaded) VALUES ('AA23GM',NOW(),NOW(),false);
+INSERT INTO vehicle(license_plate,created,modified,car_papers_uploaded) VALUES ('AA24GM',NOW(),NOW(),false);
 
 
 INSERT INTO vehicle_customer (customer_id,vehicle_id) VALUES (1,1);

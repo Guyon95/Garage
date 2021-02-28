@@ -29,6 +29,7 @@ public class PartServiceImpl implements PartService {
             newPart.setDescription(part.getDescription());
             newPart.setPartNumber(part.getPartNumber());
             newPart.setPrice(part.getPrice());
+            newPart.setStock(part.getStock());
             newPart.setCreated(LocalDateTime.now());
             newPart.setModified(LocalDateTime.now());
 

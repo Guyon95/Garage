@@ -116,15 +116,17 @@ public class CustomerServiceImpl implements CustomerService{
         if (null == file.getOriginalFilename()) {
             return ResponseEntity.ok(new MessageResponse("Failed to add the car papers to the car."));
         }
-        try {
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(file.getOriginalFilename());
-            Files.write(path, bytes);
+        Vehicle vehicle = vehicleRepository.findByLicensePlate(licensePlate);
 
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        if(vehicle !=null) {
+            vehicle.setCarPapersUploaded(true);
+
+            vehicleRepository.save(vehicle);
+
+            return ResponseEntity.ok(new MessageResponse("Added Car papers!"));
         }
-        return ResponseEntity.ok(new MessageResponse("Added Car papers!"));
+
+        return ResponseEntity.ok(new MessageResponse("Couldn't find a vehicle with the license plate: " + licensePlate));
     }
 
 

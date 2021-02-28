@@ -41,4 +41,8 @@ public class Vehicle {
     @Getter
     @Setter
     private Customer customer;
+
+    @Getter
+    @Setter
+    private boolean carPapersUploaded;
 }

@@ -62,6 +62,7 @@ public class WorkorderServiceImpl implements WorkorderService {
 
             Workorder workorder = workorderVehicle.getWorkorder();
             workorder.setWoNumber(newWoNumber);
+            workorder.setStatus(EWorkorderStatus.CHECK_CAR);
             workorder.setVehicle(vehicle);
             workorder.setCreated(LocalDateTime.now());
             workorder.setModified(LocalDateTime.now());

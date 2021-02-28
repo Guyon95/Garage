@@ -25,13 +25,13 @@ public class WorkorderRowController {
 
     @GetMapping(value = "/{woNumber}")
     @PreAuthorize("hasRole('MECHANIC')")
-    public ResponseEntity<Object> getCustomer(@PathVariable("woNumber") Long woNumber) {
+    public ResponseEntity<Object> getWorkorderRows(@PathVariable("woNumber") Long woNumber) {
         return ResponseEntity.ok().body(workorderRowService.getWorkorderRowByWoNummer(woNumber));
     }
 
     @PostMapping(value = "/approve")
     @PreAuthorize("hasRole('MECHANIC')")
-    public ResponseEntity<MessageResponse> addOtherAction(@RequestBody Approve approve) {
+    public ResponseEntity<MessageResponse> approveWorkorderRows(@RequestBody Approve approve) {
         return ResponseEntity.ok(new MessageResponse(workorderRowService.approveWorkorderRows(approve)));
     }
 }
